@@ -15,7 +15,7 @@ export default function Categories() {
           {categories.map((category) => (
             <a
               className={styles.categoryCard}
-              href="#combos"
+              href={`#/compras?categoria=${encodeURIComponent(category.name)}`}
               key={category.name}
             >
               <img src={category.image} alt={category.name} />

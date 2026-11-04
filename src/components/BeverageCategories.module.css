@@ -1,0 +1,3 @@
+.categories { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.categories a { padding: 10px 16px; color: var(--muted); border: 1px solid #333; border-radius: 6px; font-size: 14px; }
+.categories a:hover, .categories .selected { background: var(--orange); border-color: var(--orange); color: var(--black); text-decoration: none; }

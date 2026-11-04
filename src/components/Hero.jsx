@@ -26,16 +26,11 @@ export default function Hero() {
           Hamburguesas jugosas, perros calientes y salchipapas
           irresistibles. ¡El antojo perfecto en un solo lugar!
         </p>
-        <a href="#menu" className="btn-primary">
+        <a href="#/compras" className="btn-primary">
           EXPLORAR MENÚ <span uk-icon="arrow-right"></span>
         </a>
       </div>
 
-      <div className={styles.heroBadge}>
-        <span>★</span>
-        Sabor en cada
-        <strong>bocado</strong>
-      </div>
     </section>
   );
 }

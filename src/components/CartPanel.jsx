@@ -1,8 +1,9 @@
 import { formatPrice } from '../data/menu.js';
 import PaymentConfirmation from './PaymentConfirmation.jsx';
+import QuantityInput from './QuantityInput.jsx';
 import styles from './CartPanel.module.css';
 
-export default function CartPanel({ items, onIncrease, onDecrease, onRemove, onClear, onClose, onPay, payment }) {
+export default function CartPanel({ items, onIncrease, onDecrease, onRemove, onClear, onClose, onPay, payment, onQuantityChange }) {
   const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   return (
@@ -37,10 +38,11 @@ export default function CartPanel({ items, onIncrease, onDecrease, onRemove, onC
                     >
                       −
                     </button>
-                    <span className={styles.qty} aria-live="polite">{item.qty}</span>
+                    <QuantityInput quantity={item.qty} name={item.name} onChange={qty => onQuantityChange(item.id, qty)} />
                     <button
                       type="button"
                       onClick={() => onIncrease(item.id)}
+                      disabled={item.qty >= 99}
                       aria-label={`Agregar uno de ${item.name}`}
                     >
                       +

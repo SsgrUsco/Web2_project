@@ -3,11 +3,13 @@ import CartPanel from './CartPanel.jsx';
 import styles from './Navbar.module.css';
 
 export default function Navbar({
+  isShop,
   cart,
   cartCount,
   isCartOpen,
   onToggleCart,
   onIncrease,
+  onQuantityChange,
   onDecrease,
   onRemove,
   onClear,
@@ -34,10 +36,8 @@ export default function Navbar({
       </a>
 
       <div className={styles.navLinks}>
-        <a className={styles.active} href="#inicio">Inicio</a>
-        <a href="#menu">Menú</a>
-        <a href="#bebidas">Bebidas</a>
-        <a href="#combos">Combos</a>
+        <a className={!isShop ? styles.active : undefined} href="#inicio">Inicio</a>
+        <a className={isShop ? styles.active : undefined} href="#/compras">Menú</a>
         <a href="#contacto">Contacto</a>
       </div>
 
@@ -59,6 +59,7 @@ export default function Navbar({
           <CartPanel
             items={cart}
             onIncrease={onIncrease}
+            onQuantityChange={onQuantityChange}
             onDecrease={onDecrease}
             onRemove={onRemove}
             onClear={onClear}

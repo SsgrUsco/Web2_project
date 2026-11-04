@@ -1,12 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
+import Shop from './components/Shop.jsx';
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
 import Categories from './components/Categories.jsx';
 import Drinks from './components/Drinks.jsx';
 import Combos from './components/Combos.jsx';
 import Footer from './components/Footer.jsx';
+import About from './components/About.jsx';
+
+const subscribeToHash = (callback) => {
+  window.addEventListener('hashchange', callback);
+  return () => window.removeEventListener('hashchange', callback);
+};
+const getHash = () => window.location.hash;
 
 export default function App() {
+  const hash = useSyncExternalStore(subscribeToHash, getHash);
+  const isShop = hash.startsWith('#/compras');
+  const category = new URLSearchParams(hash.split('?')[1]).get('categoria') || 'Todos';
+  const subcategory = new URLSearchParams(hash.split('?')[1]).get('subcategoria') || '';
+
+  useEffect(() => {
+    if (isShop) window.scrollTo({ top: 0, behavior: 'instant' });
+    else document.getElementById(hash.slice(1) || 'inicio')?.scrollIntoView();
+  }, [hash, isShop]);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [payment, setPayment] = useState(null);
@@ -29,7 +46,7 @@ export default function App() {
 
       if (exists) {
         return current.map((item) =>
-          item.id === product.id ? { ...item, qty: item.qty + 1 } : item,
+          item.id === product.id ? { ...item, qty: Math.min(99, item.qty + 1) } : item,
         );
       }
 
@@ -49,7 +66,7 @@ export default function App() {
   const increaseQty = (id) => {
     setCart((current) =>
       current.map((item) =>
-        item.id === id ? { ...item, qty: item.qty + 1 } : item,
+        item.id === id ? { ...item, qty: Math.min(99, item.qty + 1) } : item,
       ),
     );
   };
@@ -65,6 +82,11 @@ export default function App() {
 
   const removeFromCart = (id) => {
     setCart((current) => current.filter((item) => item.id !== id));
+  };
+
+  const changeQty = (id, qty) => {
+    if (!Number.isSafeInteger(qty) || qty < 1 || qty > 99) return;
+    setCart(current => current.map(item => item.id === id ? { ...item, qty } : item));
   };
 
   const clearCart = () => setCart([]);
@@ -85,11 +107,13 @@ export default function App() {
   return (
     <>
       <Navbar
+        isShop={isShop}
         cart={cart}
         cartCount={cartCount}
         isCartOpen={isCartOpen}
         onToggleCart={() => setIsCartOpen((open) => !open)}
         onIncrease={increaseQty}
+        onQuantityChange={changeQty}
         onDecrease={decreaseQty}
         onRemove={removeFromCart}
         onClear={clearCart}
@@ -98,10 +122,13 @@ export default function App() {
         onClose={() => setIsCartOpen(false)}
       />
       <main>
+        {isShop ? <Shop category={category} subcategory={subcategory} onAdd={addToCart} onOpenCart={() => setIsCartOpen(true)} cartCount={cartCount} /> : <>
         <Hero />
         <Categories />
         <Drinks />
         <Combos onAdd={addToCart} />
+        <About />
+        </>}
       </main>
       <Footer />
     </>

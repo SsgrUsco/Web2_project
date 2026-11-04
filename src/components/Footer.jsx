@@ -17,7 +17,7 @@ export default function Footer() {
         <div>
           <h3>Enlaces</h3>
           <a href="#inicio">Inicio</a>
-          <a href="#menu">Menú</a>
+          <a href="#/compras">Menú</a>
           <a href="#bebidas">Bebidas</a>
           <a href="#combos">Combos</a>
         </div>

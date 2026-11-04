@@ -20,6 +20,7 @@ export default function Drinks() {
                 <div>
                   <h3>{drink.name}</h3>
                   <p>{drink.description}</p>
+                  <a href={`#/compras?categoria=Bebidas&subcategoria=${encodeURIComponent(drink.name)}`} className="btn-primary">Ver opciones</a>
                 </div>
               </div>
             </article>
