@@ -1,0 +1,3 @@
+.status { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px; min-height: 170px; padding: 28px 16px; color: var(--cream); border: 1px solid #414141; border-radius: 9px; background: var(--card); text-align: center; }
+.status > span { color: var(--orange); }
+.status p { margin: 0; font-size: 14px; }

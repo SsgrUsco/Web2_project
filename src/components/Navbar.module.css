@@ -3,7 +3,7 @@
   top: 0;
   z-index: 100;
   min-height: 70px;
-  padding: 12px 5%;
+  padding: 8px max(5%, calc((100% - 1180px) / 2));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,15 +14,27 @@
 
 .navLinks {
   display: flex;
+  margin-left: auto;
   align-items: center;
   gap: 28px;
 }
 
 .navLinks a {
+  position: relative;
   padding: 12px 0;
   color: #eee;
   font-size: 14px;
   transition: color 0.2s;
+}
+
+.navLinks .active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  height: 2px;
+  background: var(--orange);
 }
 
 .navLinks a:hover,
@@ -76,6 +88,8 @@
 
   .navLinks {
     order: 3;
+    margin-left: 0;
+    justify-content: flex-end;
     width: 100%;
     overflow-x: auto;
     gap: 22px;

@@ -1,19 +1,22 @@
 import SectionHeading from './SectionHeading.jsx';
+import useReveal from '../hooks/useReveal.js';
 import styles from './Categories.module.css';
 import { categories } from '../data/menu.js';
 
 export default function Categories() {
+  const section = useReveal();
   return (
-    <section className={styles.categoriesSection} id="menu">
+    <section ref={section} className={styles.categoriesSection} id="menu">
       <div className="container">
-        <SectionHeading
+        <div data-reveal><SectionHeading
           eyebrow="NUESTRAS CATEGORÍAS"
           title="¿Qué se te antoja hoy?"
-        />
+        /></div>
 
         <div className={styles.categoryGrid}>
-          {categories.map((category) => (
+          {categories.map((category, index) => (
             <a
+              data-reveal data-reveal-order={index}
               className={styles.categoryCard}
               href={`#/compras?categoria=${encodeURIComponent(category.name)}`}
               key={category.name}

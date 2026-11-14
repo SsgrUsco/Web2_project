@@ -1,9 +1,11 @@
 import { useRef } from 'react';
 import CartPanel from './CartPanel.jsx';
+import BrandLogo from './BrandLogo.jsx';
 import styles from './Navbar.module.css';
 
 export default function Navbar({
   isShop,
+  isAbout,
   cart,
   cartCount,
   isCartOpen,
@@ -26,19 +28,12 @@ export default function Navbar({
 
   return (
     <nav className={styles.navbar}>
-      {/* .brand y .brand-icon son globales: los comparte con Footer */}
-      <a href="#inicio" className="brand" aria-label="Burger Zone, inicio">
-        <span className="brand-icon">B</span>
-        <span>
-          Burger
-          <strong>Zone</strong>
-        </span>
-      </a>
+      <BrandLogo />
 
       <div className={styles.navLinks}>
-        <a className={!isShop ? styles.active : undefined} href="#inicio">Inicio</a>
-        <a className={isShop ? styles.active : undefined} href="#/compras">Menú</a>
-        <a href="#contacto">Contacto</a>
+        <a className={!isShop && !isAbout ? styles.active : undefined} aria-current={!isShop && !isAbout ? 'page' : undefined} href="#inicio">Inicio</a>
+        <a className={isAbout ? styles.active : undefined} aria-current={isAbout ? 'page' : undefined} href="#/nosotros">Nosotros</a>
+        <a className={isShop ? styles.active : undefined} aria-current={isShop ? 'page' : undefined} href="#/compras">Menú</a>
       </div>
 
       <div className={styles.cartDropdown}>
@@ -72,3 +67,4 @@ export default function Navbar({
     </nav>
   );
 }
+

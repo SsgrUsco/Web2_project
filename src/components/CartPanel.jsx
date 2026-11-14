@@ -2,12 +2,14 @@ import { formatPrice } from '../data/menu.js';
 import PaymentConfirmation from './PaymentConfirmation.jsx';
 import QuantityInput from './QuantityInput.jsx';
 import styles from './CartPanel.module.css';
+import useReveal from '../hooks/useReveal.js';
 
 export default function CartPanel({ items, onIncrease, onDecrease, onRemove, onClear, onClose, onPay, payment, onQuantityChange }) {
+  const panel = useReveal({ immediate: true });
   const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   return (
-    <div className={styles.cartPanel} id="carrito-panel">
+    <div ref={panel} data-reveal className={styles.cartPanel} id="carrito-panel">
       <div className={styles.cartPanelHeader}>
         <h3>Tu carrito</h3>
         <button type="button" className={styles.cartClose} onClick={onClose} aria-label="Cerrar carrito">
@@ -28,6 +30,7 @@ export default function CartPanel({ items, onIncrease, onDecrease, onRemove, onC
 
                 <div className={styles.cartItemInfo}>
                   <span className={styles.cartItemName}>{item.name}</span>
+                  {item.options && <span className={styles.cartOptions}>{item.options}</span>}
                   <span className={styles.cartItemPrice}>{formatPrice(item.price)} c/u</span>
 
                   <div className={styles.qtyControls}>

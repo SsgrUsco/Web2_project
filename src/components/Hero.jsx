@@ -9,8 +9,7 @@ export default function Hero() {
         muted
         loop
         playsInline
-        preload="metadata"
-        poster="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=1800&q=90"
+        preload="auto"
         aria-hidden="true"
         tabIndex={-1}
       >

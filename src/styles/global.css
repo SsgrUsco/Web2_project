@@ -18,6 +18,12 @@
   --orange: #ff891e;
   --cream: #f6f0e5;
   --muted: #bcb8b1;
+  --font-body: Inter, "Segoe UI", sans-serif;
+  --font-display: Inter, "Segoe UI", sans-serif;
+  --accent-ink: #a44700;
+  --line: #39332c;
+  --radius: 14px;
+  --section-space: clamp(40px, 5vw, 68px);
 }
 
 * {
@@ -33,7 +39,15 @@ body {
   margin: 0;
   min-width: 320px;
   background: var(--black);
+  font-family: var(--font-body);
+  color: var(--cream);
+  line-height: 1.6;
 }
+
+html, h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); }
+input, select, textarea { font-family: inherit; }
+a:hover { text-decoration: none; }
+::selection { background: var(--orange); color: var(--black); }
 
 a {
   color: inherit;
@@ -45,7 +59,10 @@ button {
 }
 
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
   outline: 3px solid var(--orange);
   outline-offset: 3px;
   border-radius: 4px;
@@ -59,6 +76,9 @@ button:focus-visible {
 }
 
 .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: var(--orange);
   font-size: 13px;
   font-weight: 800;
@@ -70,13 +90,13 @@ button:focus-visible {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  min-height: 43px;
+  min-height: 44px;
   padding: 12px 23px;
   border: 0;
-  border-radius: 30px;
+  border-radius: 10px;
   background: var(--orange);
   color: #17110a;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;

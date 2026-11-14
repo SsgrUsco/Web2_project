@@ -1,38 +1,34 @@
 import styles from './Footer.module.css';
 import SocialLinks from './SocialLinks.jsx';
+import BrandLogo from './BrandLogo.jsx';
+import { business } from '../data/business.js';
 
 export default function Footer() {
   return (
     <footer className={styles.footer} id="contacto">
       <div className={`container ${styles.footerGrid}`}>
-        {/* .brand y .brand-icon son globales: los comparte con Navbar */}
-        <a href="#inicio" className="brand">
-          <span className="brand-icon">B</span>
-          <span>
-            BURGER
-            <strong>ZONE</strong>
-          </span>
-        </a>
+        <BrandLogo large />
 
         <div>
           <h3>Enlaces</h3>
           <a href="#inicio">Inicio</a>
           <a href="#/compras">Menú</a>
+          <a href="#/nosotros">Nosotros</a>
           <a href="#bebidas">Bebidas</a>
           <a href="#combos">Combos</a>
         </div>
 
         <div>
           <h3>Horario</h3>
-          <p>Lunes a domingo</p>
-          <p>Horario por confirmar</p>
+          <p>{business.days}</p>
+          <p>{business.hours}</p>
         </div>
 
         <div>
           <h3>Contacto</h3>
-          <p>Neiva, Huila, Colombia</p>
-          <p>+57 300 123 4567</p>
-          <p>@burgerzone.com</p>
+          <p>{business.city}</p>
+          <p>{business.phone}</p>
+          <p>{business.email}</p>
           <SocialLinks />
         </div>
       </div>
@@ -43,3 +39,4 @@ export default function Footer() {
     </footer>
   );
 }
+

@@ -1,31 +1,14 @@
 .footer {
-  padding-top: 35px;
-  background: #080808;
+  padding-top: 48px;
+  background: radial-gradient(ellipse 600px 300px at 100% 100%, #ff891e14, transparent 75%), #080808;
   border-top: 2px solid #302116;
-}
-
-.footerGrid :global(.brand-icon) {
-  width: 96px;
-  height: 96px;
-  flex: 0 0 96px;
-  font-size: 56px;
-}
-
-.footerGrid :global(.brand) {
-  gap: 14px;
-  font-size: 30px;
-  letter-spacing: 0;
-}
-
-.footerGrid :global(.brand) strong {
-  font-size: 38px;
 }
 
 .footerGrid {
   display: grid;
   grid-template-columns: minmax(260px, 1.3fr) 0.7fr 1fr 1.4fr;
   gap: 30px;
-  padding-bottom: 30px;
+  padding-bottom: 40px;
 }
 
 .footerGrid h3 {
@@ -40,7 +23,7 @@
   display: block;
   margin: 7px 0;
   color: #c8c4be;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -67,9 +50,5 @@
     gap: 24px 15px;
   }
 
-  /* .brand es global (la comparte con el navbar), por eso :global() */
-  .footerGrid :global(.brand) {
-    align-self: start;
-    grid-column: 1 / -1;
-  }
+  .footerGrid > div:last-child { grid-column: 1 / -1; }
 }

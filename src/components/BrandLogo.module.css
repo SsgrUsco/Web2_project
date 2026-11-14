@@ -1,0 +1,28 @@
+.logo {
+  display: block;
+  width: 190px;
+  flex-shrink: 0;
+}
+
+.logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.large {
+  width: 280px;
+  max-width: 100%;
+  align-self: start;
+}
+
+.logo:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+  .logo { width: 170px; }
+  .large { width: 260px; grid-column: 1 / -1; }
+}

@@ -1,4 +1,5 @@
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
+import AddNotice from './components/AddNotice.jsx';
 import Shop from './components/Shop.jsx';
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
@@ -7,6 +8,9 @@ import Drinks from './components/Drinks.jsx';
 import Combos from './components/Combos.jsx';
 import Footer from './components/Footer.jsx';
 import About from './components/About.jsx';
+import Chatbot from './components/Chatbot.jsx';
+
+import useCatalog from './hooks/useCatalog.js';
 
 const subscribeToHash = (callback) => {
   window.addEventListener('hashchange', callback);
@@ -15,18 +19,23 @@ const subscribeToHash = (callback) => {
 const getHash = () => window.location.hash;
 
 export default function App() {
+  const catalogState = useCatalog();
   const hash = useSyncExternalStore(subscribeToHash, getHash);
   const isShop = hash.startsWith('#/compras');
-  const category = new URLSearchParams(hash.split('?')[1]).get('categoria') || 'Todos';
+  const isAbout = ['#/nosotros', '#nosotros', '#/contacto', '#contacto'].includes(hash);
+  const category = new URLSearchParams(hash.split('?')[1]).get('categoria') || 'Hamburguesas';
   const subcategory = new URLSearchParams(hash.split('?')[1]).get('subcategoria') || '';
 
   useEffect(() => {
-    if (isShop) window.scrollTo({ top: 0, behavior: 'instant' });
+    if (isShop || isAbout) window.scrollTo({ top: 0, behavior: 'instant' });
     else document.getElementById(hash.slice(1) || 'inicio')?.scrollIntoView();
-  }, [hash, isShop]);
+  }, [hash, isShop, isAbout]);
   const [cart, setCart] = useState([]);
+  const [sortOrder, setSortOrder] = useState('category');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [payment, setPayment] = useState(null);
+  const [notice, setNotice] = useState(null);
+  const dismissNotice = useCallback(() => setNotice(null), []);
 
   useEffect(() => {
     if (!isCartOpen) return undefined;
@@ -40,6 +49,11 @@ export default function App() {
   }, [isCartOpen]);
 
   const addToCart = (product) => {
+    if (cart.some(item => item.id === product.id && item.qty >= 99)) {
+      setNotice({ message: 'Ya tienes el máximo de 99 unidades de este producto.' });
+      return false;
+    }
+    setNotice({ message: `${product.name} agregado al carrito` });
     setPayment(null);
     setCart((current) => {
       const exists = current.some((item) => item.id === product.id);
@@ -57,6 +71,7 @@ export default function App() {
           name: product.name,
           price: product.price,
           image: product.image,
+          options: product.options || '',
           qty: 1,
         },
       ];
@@ -106,8 +121,10 @@ export default function App() {
 
   return (
     <>
+      {notice && <AddNotice notice={notice} onDismiss={dismissNotice} />}
       <Navbar
         isShop={isShop}
+        isAbout={isAbout}
         cart={cart}
         cartCount={cartCount}
         isCartOpen={isCartOpen}
@@ -122,15 +139,17 @@ export default function App() {
         onClose={() => setIsCartOpen(false)}
       />
       <main>
-        {isShop ? <Shop category={category} subcategory={subcategory} onAdd={addToCart} onOpenCart={() => setIsCartOpen(true)} cartCount={cartCount} /> : <>
+        {isAbout ? <About /> : isShop ? <Shop key={`${category}:${subcategory}`} category={category} subcategory={subcategory} onAdd={addToCart} catalogState={catalogState} sortOrder={sortOrder} onSortChange={setSortOrder} /> : <>
         <Hero />
         <Categories />
         <Drinks />
-        <Combos onAdd={addToCart} />
-        <About />
+        <Combos onAdd={addToCart} catalogState={catalogState} />
+
         </>}
       </main>
       <Footer />
+      <Chatbot cart={cart} onOpenCart={() => setIsCartOpen(true)} catalogState={catalogState} />
     </>
   );
 }
+

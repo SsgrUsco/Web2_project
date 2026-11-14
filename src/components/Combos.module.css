@@ -1,8 +1,11 @@
 .combosSection {
-  padding: 36px 0 45px;
-  background:
-    radial-gradient(ellipse at top left, #42200d 0%, transparent 45%),
-    #111;
+  padding: var(--section-space) 0;
+  background: radial-gradient(ellipse at top left, #42200d 0%, transparent 45%), #111;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 480px) {
+  .combosSection :global(.product-grid) { grid-template-columns: 1fr; }
 }
 
 .combosHeading {

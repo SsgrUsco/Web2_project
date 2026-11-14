@@ -1,18 +1,21 @@
 .sectionHeading {
-  margin-bottom: 22px;
+  margin-bottom: 28px;
 }
 
 .sectionHeading > span {
-  color: var(--orange);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent-ink);
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 1.1px;
 }
 
 .sectionHeading h2 {
-  margin: 5px 0 0;
+  margin: 12px 0 0;
   color: #171717;
-  font-size: clamp(25px, 3vw, 34px);
+  font-size: clamp(28px, 3vw, 38px);
   line-height: 1.2;
   font-weight: 850;
   letter-spacing: -0.7px;
@@ -21,3 +24,6 @@
 .headingLight h2 {
   color: #f8f5ef;
 }
+
+.sectionHeading > span::before { content: ''; width: 24px; height: 2px; background: currentColor; }
+.headingLight > span { color: var(--orange); }

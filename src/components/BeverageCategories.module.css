@@ -1,3 +1,7 @@
-.categories { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-.categories a { padding: 10px 16px; color: var(--muted); border: 1px solid #333; border-radius: 6px; font-size: 14px; }
-.categories a:hover, .categories .selected { background: var(--orange); border-color: var(--orange); color: var(--black); text-decoration: none; }
+.categories { display: flex; flex-direction: column; gap: 3px; }
+.categories a { display: flex; align-items: center; gap: 9px; min-height: 35px; padding: 6px 0; color: var(--muted); font-size: 13px; text-decoration: none; }
+.categories a:hover, .categories a.selected { color: var(--cream); }
+.dot { width: 16px; height: 16px; border: 1px solid #777; border-radius: 50%; flex-shrink: 0; }
+.selected .dot { border-color: var(--orange); background: var(--orange); box-shadow: inset 0 0 0 3px var(--card); }
+.count { margin-left: auto; color: #a69e91; font-size: 11px; font-variant-numeric: tabular-nums; }
+.selected .count { color: var(--orange); }
