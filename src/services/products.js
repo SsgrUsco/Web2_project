@@ -8,7 +8,7 @@ export function normalizeProducts(data) {
     if (!item || !['string', 'number'].includes(typeof item.id)
       || typeof item.name !== 'string' || !item.name.trim()
       || typeof item.category !== 'string' || !item.category.trim()
-      || typeof item.image !== 'string' || !/^https?:\/\//i.test(item.image)
+      || typeof item.image !== 'string' || !(/^https?:\/\//i.test(item.image) || /^\/images\/products\/[a-z0-9-]+\.(png|webp)$/.test(item.image))
       || !['number', 'string'].includes(typeof item.price) || String(item.price).trim() === '') {
       throw new Error('Hay un producto con datos incompletos.');
     }

@@ -4,9 +4,19 @@
   border-top: 1px solid var(--line);
 }
 
-@media (max-width: 480px) {
-  .combosSection :global(.product-grid) { grid-template-columns: 1fr; }
-}
+.slider { min-width: 0; }
+.stage { position: relative; padding-inline: 26px; }
+.slides { margin-top: 0; margin-bottom: 0; padding-top: 6px; padding-bottom: 6px; }
+.slide { display: flex; }
+.cardMotion { display: flex; width: 100%; }
+.cardMotion > article { width: 100%; }
+.controls { position: absolute; inset: 0; pointer-events: none; display: flex; align-items: center; justify-content: space-between; }
+.controls button { pointer-events: auto; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--orange); border-radius: 50%; background: var(--black); color: var(--orange); cursor: pointer; box-shadow: 0 4px 16px #0005; }
+.controls button:hover { background: var(--orange); color: var(--black); }
+.controls button:global(.uk-invisible) { visibility: visible !important; opacity: .3; pointer-events: none; }
+.dots { justify-content: center; margin-top: 22px; margin-bottom: 0; }
+.dots > li > a { border-color: var(--muted); }
+.dots > :global(.uk-active) > a { background: var(--orange); border-color: var(--orange); }
 
 .combosHeading {
   display: flex;

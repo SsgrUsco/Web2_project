@@ -1,11 +1,12 @@
 import styles from './Contact.module.css';
 import { business } from '../data/business.js';
+import { categories } from '../data/menu.js';
 
 export default function Contact() {
   return (
     <section className={styles.contact} aria-labelledby="contact-title">
-      <div className={`container ${styles.container}`}>
-        <a className={styles.back} href="#inicio"><span uk-icon="arrow-left" aria-hidden="true" /> Volver al inicio</a>
+      <div className={`container ${styles.layout}`}>
+        <div className={styles.content}>
         <header className={styles.heading}>
           <span className="eyebrow">ESTAMOS PARA ESCUCHARTE</span>
           <h1 id="contact-title">HABLEMOS <em>DE TU ANTOJO</em></h1>
@@ -56,6 +57,11 @@ export default function Contact() {
             <button className="btn-primary" type="submit" disabled>Enviar mensaje <span uk-icon="arrow-right" aria-hidden="true" /></button>
           </div>
         </form>
+        </div>
+        <figure className={styles.visual}>
+          <img src={categories[0].image} alt="Hamburguesa con queso, carne y vegetales" width="700" height="900" />
+          <figcaption><span>BURGER ZONE</span><strong>Siempre hay algo que compartir.</strong></figcaption>
+        </figure>
       </div>
     </section>
   );

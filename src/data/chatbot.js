@@ -18,13 +18,13 @@ export function getChatReply(message, cart = [], catalog = [], catalogStatus = '
     };
   }
   if (/horario|abren|cierran|abierto/.test(text)) {
-    return { text: `${business.days}: ${business.hours}.`, action: { label: 'Conócenos', href: '#/nosotros' } };
+    return { text: `${business.days}: ${business.hours}.`, action: { label: 'Ver contacto', href: '#/contacto' } };
   }
   if (/ubicacion|direccion|donde|contacto|telefono/.test(text)) {
-    return { text: `Estamos en ${business.city}. Dirección: ${business.address}. Teléfono: ${business.phone}. Correo: ${business.email}.`, action: { label: 'Conócenos', href: '#/nosotros' } };
+    return { text: `Estamos en ${business.city}. Dirección: ${business.address}. Teléfono: ${business.phone}. Correo: ${business.email}.`, action: { label: 'Ver contacto', href: '#/contacto' } };
   }
   if (/domicilio|envio|entrega/.test(text)) {
-    return { text: 'Consulta las opciones de entrega a través de nuestros canales de contacto.', action: { label: 'Conócenos', href: '#/nosotros' } };
+    return { text: 'Consulta las opciones de entrega a través de nuestros canales de contacto.', action: { label: 'Ver contacto', href: '#/contacto' } };
   }
   const groups = [
     ['hamburgues', 'Hamburguesas'], ['perro', 'Perros calientes'],
@@ -52,4 +52,5 @@ export function getChatReply(message, cart = [], catalog = [], catalogStatus = '
   if (/gracias/.test(text)) return { text: '¡Con gusto! Estoy aquí si necesitas ayuda con el menú.' };
   return { text: 'Puedo ayudarte con el menú, precios, carrito, horarios y ubicación. Prueba con “hamburguesas” o elige una de las preguntas rápidas.', action: menuAction };
 }
+
 

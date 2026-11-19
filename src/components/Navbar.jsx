@@ -6,6 +6,8 @@ import styles from './Navbar.module.css';
 export default function Navbar({
   isShop,
   isAbout,
+  isContact,
+  isCheckout,
   cart,
   cartCount,
   isCartOpen,
@@ -31,8 +33,9 @@ export default function Navbar({
       <BrandLogo />
 
       <div className={styles.navLinks}>
-        <a className={!isShop && !isAbout ? styles.active : undefined} aria-current={!isShop && !isAbout ? 'page' : undefined} href="#inicio">Inicio</a>
+        <a className={!isShop && !isAbout && !isCheckout && !isContact ? styles.active : undefined} aria-current={!isShop && !isAbout && !isCheckout && !isContact ? 'page' : undefined} href="#inicio">Inicio</a>
         <a className={isAbout ? styles.active : undefined} aria-current={isAbout ? 'page' : undefined} href="#/nosotros">Nosotros</a>
+        <a className={isContact ? styles.active : undefined} aria-current={isContact ? 'page' : undefined} href="#/contacto">Contacto</a>
         <a className={isShop ? styles.active : undefined} aria-current={isShop ? 'page' : undefined} href="#/compras">Menú</a>
       </div>
 
@@ -67,4 +70,5 @@ export default function Navbar({
     </nav>
   );
 }
+
 

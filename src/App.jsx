@@ -8,7 +8,9 @@ import Drinks from './components/Drinks.jsx';
 import Combos from './components/Combos.jsx';
 import Footer from './components/Footer.jsx';
 import About from './components/About.jsx';
+import Contact from './components/Contact.jsx';
 import Chatbot from './components/Chatbot.jsx';
+import Checkout from './components/Checkout.jsx';
 
 import useCatalog from './hooks/useCatalog.js';
 
@@ -22,14 +24,16 @@ export default function App() {
   const catalogState = useCatalog();
   const hash = useSyncExternalStore(subscribeToHash, getHash);
   const isShop = hash.startsWith('#/compras');
-  const isAbout = ['#/nosotros', '#nosotros', '#/contacto', '#contacto'].includes(hash);
+  const isContact = ['#/contacto', '#contacto'].includes(hash);
+  const isCheckout = hash === '#/checkout';
+  const isAbout = ['#/nosotros', '#nosotros'].includes(hash);
   const category = new URLSearchParams(hash.split('?')[1]).get('categoria') || 'Hamburguesas';
   const subcategory = new URLSearchParams(hash.split('?')[1]).get('subcategoria') || '';
 
   useEffect(() => {
-    if (isShop || isAbout) window.scrollTo({ top: 0, behavior: 'instant' });
+    if (isShop || isAbout || isCheckout || isContact) window.scrollTo({ top: 0, behavior: 'instant' });
     else document.getElementById(hash.slice(1) || 'inicio')?.scrollIntoView();
-  }, [hash, isShop, isAbout]);
+  }, [hash, isShop, isAbout, isCheckout, isContact]);
   const [cart, setCart] = useState([]);
   const [sortOrder, setSortOrder] = useState('category');
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -106,15 +110,23 @@ export default function App() {
 
   const clearCart = () => setCart([]);
 
-  const payCart = () => {
+  const payCart = ({ delivery, method }) => {
     if (cart.length === 0) return;
 
     // Compra de demostración: no se envían datos a una pasarela de pago.
     setPayment({
       total: cart.reduce((sum, item) => sum + item.price * item.qty, 0),
       count: cart.reduce((sum, item) => sum + item.qty, 0),
+      delivery,
+      method,
     });
     setCart([]);
+    setIsCartOpen(false);
+  };
+
+  const openCheckout = () => {
+    setIsCartOpen(false);
+    window.location.hash = '/checkout';
   };
 
   const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -124,7 +136,8 @@ export default function App() {
       {notice && <AddNotice notice={notice} onDismiss={dismissNotice} />}
       <Navbar
         isShop={isShop}
-        isAbout={isAbout}
+        isAbout={isAbout} isContact={isContact}
+        isCheckout={isCheckout}
         cart={cart}
         cartCount={cartCount}
         isCartOpen={isCartOpen}
@@ -134,12 +147,12 @@ export default function App() {
         onDecrease={decreaseQty}
         onRemove={removeFromCart}
         onClear={clearCart}
-        onPay={payCart}
+        onPay={openCheckout}
         payment={payment}
         onClose={() => setIsCartOpen(false)}
       />
       <main>
-        {isAbout ? <About /> : isShop ? <Shop key={`${category}:${subcategory}`} category={category} subcategory={subcategory} onAdd={addToCart} catalogState={catalogState} sortOrder={sortOrder} onSortChange={setSortOrder} /> : <>
+        {isContact ? <Contact /> : isCheckout ? <Checkout items={cart} payment={payment} onConfirm={payCart} onQuantityChange={changeQty} onRemove={removeFromCart} /> : isAbout ? <About /> : isShop ? <Shop key={`${category}:${subcategory}`} category={category} subcategory={subcategory} onAdd={addToCart} catalogState={catalogState} sortOrder={sortOrder} onSortChange={setSortOrder} /> : <>
         <Hero />
         <Categories />
         <Drinks />
@@ -152,4 +165,5 @@ export default function App() {
     </>
   );
 }
+
 

@@ -7,7 +7,7 @@ export default function ProductCard({ product, onAdd, onDetails, entranceOrder =
 
   return (
     <article ref={card} data-reveal data-reveal-order={entranceOrder} className={styles.productCard}>
-      <img src={product.image} alt={product.name} />
+      <img src={product.image} alt={product.name} loading="lazy" decoding="async" />
       <div className={styles.productInfo}>
         <h3>{product.name}</h3>
         <p>{product.description}</p>
