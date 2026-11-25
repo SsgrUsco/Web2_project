@@ -2,11 +2,11 @@ import { useRef } from 'react';
 import { gsap, useGSAP } from '../lib/motion.js';
 
 // Cada componente limpia sus animaciones y ScrollTriggers al desmontarse.
-export default function useReveal({ immediate = false } = {}) {
+export default function useReveal({ immediate = false, enabled = true } = {}) {
   const scope = useRef(null);
 
   useGSAP(() => {
-    if (!scope.current) return;
+    if (!scope.current || !enabled) return;
     const media = gsap.matchMedia();
     media.add({ reduce: '(prefers-reduced-motion: reduce)', standard: '(prefers-reduced-motion: no-preference)' }, context => {
       const targets = scope.current.matches('[data-reveal]')
@@ -29,7 +29,7 @@ export default function useReveal({ immediate = false } = {}) {
       });
     });
     return () => media.revert();
-  }, { scope, dependencies: [immediate], revertOnUpdate: true });
+  }, { scope, dependencies: [immediate, enabled], revertOnUpdate: true });
 
   return scope;
 }

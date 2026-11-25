@@ -23,25 +23,18 @@ export default function Combos({ onAdd, catalogState }) {
     const media = gsap.matchMedia();
     media.add({ reduce: '(prefers-reduced-motion: reduce)', standard: '(prefers-reduced-motion: no-preference)' }, mediaContext => {
       const context = gsap.context(() => {}, element);
-      context.add('revealSlide', () => {
-        const viewport = element.querySelector('.uk-slider-container').getBoundingClientRect();
-        const cards = [...element.querySelectorAll('[data-combo-motion]')];
-        gsap.killTweensOf(cards);
-        gsap.set(cards, { clearProps: 'opacity,transform' });
-        const visible = cards.filter(card => {
-          const bounds = card.parentElement.getBoundingClientRect();
-          return bounds.right > viewport.left + 2 && bounds.left < viewport.right - 2;
-        });
-        const reduced = mediaContext.conditions.reduce;
-        gsap.fromTo(visible, { opacity: .2, y: reduced ? 0 : 28 }, {
-          opacity: 1, y: 0, duration: reduced ? .3 : .7,
-          stagger: reduced ? 0 : .09, ease: 'power2.out',
-          overwrite: true, clearProps: 'opacity,transform',
+      context.add('revealSlide', event => {
+        // UIkit emite el evento por tarjeta: animar solo la entrante y sin ocultarla.
+        const card = event.target.querySelector('[data-combo-motion]');
+        if (!card || mediaContext.conditions.reduce) return;
+        gsap.fromTo(card, { y: 12 }, {
+          y: 0, duration: .45, ease: 'power2.out',
+          overwrite: true, clearProps: 'transform',
         });
       });
-      element.addEventListener('itemshown', context.revealSlide);
+      element.addEventListener('itemshow', context.revealSlide);
       return () => {
-        element.removeEventListener('itemshown', context.revealSlide);
+        element.removeEventListener('itemshow', context.revealSlide);
         context.revert();
       };
     });
@@ -66,12 +59,12 @@ export default function Combos({ onAdd, catalogState }) {
           <div className={styles.stage}>
           <div className="uk-slider-container">
           <ul className={`uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-4@m uk-grid uk-grid-small ${styles.slides}`}>
-          {combos.map((combo, index) => (
+          {combos.map((combo) => (
             <li key={combo.id} className={styles.slide}>
             <div data-combo-motion className={styles.cardMotion}>
             <ProductCard
               product={combo}
-              entranceOrder={index % 4}
+              animateEntrance={false}
               onAdd={onAdd}
               onDetails={setProductDetails}
             />

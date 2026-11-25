@@ -2,8 +2,8 @@ import useReveal from '../hooks/useReveal.js';
 import { formatPrice } from '../data/menu.js';
 import styles from './ProductCard.module.css';
 
-export default function ProductCard({ product, onAdd, onDetails, entranceOrder = 0 }) {
-  const card = useReveal();
+export default function ProductCard({ product, onAdd, onDetails, entranceOrder = 0, animateEntrance = true }) {
+  const card = useReveal({ enabled: animateEntrance });
 
   return (
     <article ref={card} data-reveal data-reveal-order={entranceOrder} className={styles.productCard}>
