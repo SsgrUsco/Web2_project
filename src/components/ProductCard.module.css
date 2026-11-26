@@ -37,9 +37,12 @@
   font-weight: 800;
 }
 
-.productInfo p {
-  flex: 1;
-  min-height: 38px;
+.productInfo .description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  min-height: 3.1em;
   margin: 0 0 9px;
   color: #c8c4be;
   font-size: 14px;
@@ -53,7 +56,8 @@
 
 .price {
   display: block;
-  margin: 7px 0 10px;
+  margin: auto 0 10px;
+  padding-top: 7px;
   color: var(--orange);
   font-size: 21px;
   font-weight: 900;
@@ -82,8 +86,7 @@
     font-size: 16px;
   }
 
-  .productInfo p {
-    min-height: 0;
+  .productInfo .description {
     font-size: 13px;
   }
 

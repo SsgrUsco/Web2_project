@@ -1,5 +1,4 @@
 
-import { categories } from '../data/menu.js';
 import styles from './About.module.css';
 
 export default function About() {
@@ -8,12 +7,12 @@ export default function About() {
       <div className="container">
         <div className={styles.layout}>
           <figure className={styles.visual}>
-            <img src={categories[0].image} alt="Hamburguesa con carne, queso y vegetales frescos" width="700" height="800" />
+            <img src="/images/about-burger-kitchen.png" alt="Preparación de una hamburguesa junto a la parrilla" width="1086" height="1448" />
             <figcaption><span>BURGER ZONE</span><strong>El antojo nos reúne.</strong></figcaption>
           </figure>
           <div className={styles.story}>
             <span className="eyebrow">SOBRE NOSOTROS</span>
-            <h1 id="about-title">Buena comida.<br /><em>Buenos momentos.</em></h1>
+            <h1 id="about-title">BUENA COMIDA.<br /><em>BUENOS MOMENTOS.</em></h1>
             <p className={styles.intro}>El punto de encuentro para tu antojo, aquí en Neiva.</p>
             <p>En Burger Zone nos gusta reunir lo que más disfrutas: buena comida, porciones para compartir y un momento para desconectarte.</p>
             <p>Hamburguesas, perros calientes, salchipapas, fritos y bebidas: un menú para venir con amigos, compartir en familia o darte ese gusto que tanto quieres.</p>

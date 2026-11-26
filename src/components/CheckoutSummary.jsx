@@ -2,7 +2,7 @@ import QuantityInput from './QuantityInput.jsx';
 import { formatPrice } from '../data/menu.js';
 import styles from './Checkout.module.css';
 
-export default function CheckoutSummary({ items, delivery, onQuantityChange, onRemove }) {
+export default function CheckoutSummary({ items, delivery, method, onQuantityChange, onRemove }) {
   const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
   return (
     <aside className={styles.summary} aria-labelledby="order-title">
@@ -16,7 +16,7 @@ export default function CheckoutSummary({ items, delivery, onQuantityChange, onR
       </ul>
       <dl className={styles.totals}><div><dt>Subtotal</dt><dd>{formatPrice(subtotal)}</dd></div><div><dt>{delivery === 'pickup' ? 'Recogida en el local' : 'Domicilio'}</dt><dd>{delivery === 'pickup' ? 'Sin costo' : 'Por confirmar'}</dd></div><div className={styles.total}><dt>{delivery === 'pickup' ? 'Total' : 'Total de productos'}</dt><dd>{formatPrice(subtotal)}</dd></div></dl>
       {delivery === 'delivery' && <p className={styles.hint}>El costo de entrega se confirma según tu dirección.</p>}
-      <button className={`btn-primary ${styles.confirm}`} type="submit" form="checkout-form">Confirmar pedido <span uk-icon="arrow-right" aria-hidden="true" /></button>
+      <button className={`btn-primary ${styles.confirm}`} type="submit" form="checkout-form" disabled={method === 'card'} aria-describedby={method === 'card' ? 'card-payment-status' : undefined}>{method === 'card' ? 'Pagar con tarjeta' : 'Confirmar pedido'} <span uk-icon="arrow-right" aria-hidden="true" /></button>
     </aside>
   );
 }

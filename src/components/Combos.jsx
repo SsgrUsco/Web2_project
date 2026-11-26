@@ -23,18 +23,18 @@ export default function Combos({ onAdd, catalogState }) {
     const media = gsap.matchMedia();
     media.add({ reduce: '(prefers-reduced-motion: reduce)', standard: '(prefers-reduced-motion: no-preference)' }, mediaContext => {
       const context = gsap.context(() => {}, element);
-      context.add('revealSlide', event => {
-        // UIkit emite el evento por tarjeta: animar solo la entrante y sin ocultarla.
-        const card = event.target.querySelector('[data-combo-motion]');
-        if (!card || mediaContext.conditions.reduce) return;
-        gsap.fromTo(card, { y: 12 }, {
-          y: 0, duration: .45, ease: 'power2.out',
+      context.add('animateControl', event => {
+        // Las tarjetas se desplazan juntas con UIkit; GSAP responde en el control.
+        const button = event.target.closest('button[uk-slider-item]');
+        if (!button || mediaContext.conditions.reduce) return;
+        gsap.fromTo(button, { scale: .9 }, {
+          scale: 1, duration: .25, ease: 'power2.out',
           overwrite: true, clearProps: 'transform',
         });
       });
-      element.addEventListener('itemshow', context.revealSlide);
+      element.addEventListener('click', context.animateControl);
       return () => {
-        element.removeEventListener('itemshow', context.revealSlide);
+        element.removeEventListener('click', context.animateControl);
         context.revert();
       };
     });
@@ -55,13 +55,13 @@ export default function Combos({ onAdd, catalogState }) {
 
         <CatalogStatus status={status} onRetry={retry} />
         {status === 'ready' && combos.length === 0 && <p>No hay combos disponibles en este momento.</p>}
-        {combos.length > 0 && <div ref={slider} className={styles.slider} uk-slider="finite: true; sets: true" role="region" aria-label="Combos especiales">
+        {combos.length > 0 && <div ref={slider} className={styles.slider} uk-slider="finite: false; sets: true" role="region" aria-label="Combos especiales">
           <div className={styles.stage}>
           <div className="uk-slider-container">
           <ul className={`uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-4@m uk-grid uk-grid-small ${styles.slides}`}>
           {combos.map((combo) => (
             <li key={combo.id} className={styles.slide}>
-            <div data-combo-motion className={styles.cardMotion}>
+            <div className={styles.cardMotion}>
             <ProductCard
               product={combo}
               animateEntrance={false}

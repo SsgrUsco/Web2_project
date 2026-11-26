@@ -20,6 +20,11 @@
 .choices label { display: flex; align-items: center; gap: 10px; padding: 14px 12px; border: 1px solid #51483e; border-radius: 8px; cursor: pointer; }
 .choices label:has(input:checked) { border-color: var(--orange); background: #ff891e0d; }
 .choices input { flex-shrink: 0; margin: 0; }
+.paymentChoices { grid-template-columns: 1fr; }
+.paymentBrands { margin-left: auto; display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.paymentBrands img { display: block; box-sizing: border-box; width: 54px; height: 36px; padding: 6px; object-fit: contain; background: #fff; border-radius: 5px; }
+.cashIcon { margin-left: auto; color: var(--orange); }
+@media (max-width: 400px) { .paymentBrands { gap: 4px; } .paymentBrands img { width: 40px; height: 30px; padding: 4px; } }
 .location { display: flex; gap: 10px; color: var(--muted); font-size: 14px; }
 .location span { color: var(--orange); flex-shrink: 0; }
 .notes { margin-top: 20px; }

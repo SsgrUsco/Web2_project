@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { getChatReply } from '../data/chatbot.js';
 import styles from './Chatbot.module.css';
+import ChatbotIcon from './ChatbotIcon.jsx';
+import { gsap } from '../lib/motion.js';
 
 const suggestions = ['Ver menú', 'Horarios', 'Mi carrito'];
 
@@ -13,13 +15,36 @@ export default function Chatbot({ cart, onOpenCart, catalogState }) {
   const launcherRef = useRef(null);
   const inputRef = useRef(null);
   const logRef = useRef(null);
+  const panelRef = useRef(null);
+  const previousMessageCount = useRef(messages.length);
 
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const tween = gsap.to(panelRef.current, {
+      autoAlpha: open ? 1 : 0,
+      y: open || reduced ? 0 : 18,
+      scale: open || reduced ? 1 : .96,
+      duration: reduced ? 0 : open ? .32 : .2,
+      ease: 'power2.out', overwrite: true,
+      onComplete: () => { if (open) inputRef.current?.focus(); },
+    });
+    return () => tween.kill();
   }, [open]);
 
   useEffect(() => {
     if (open && logRef.current) logRef.current.scrollTop = logRef.current.scrollHeight;
+    const start = previousMessageCount.current;
+    previousMessageCount.current = messages.length;
+    if (!open || messages.length <= start || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const added = [...logRef.current.children].slice(start);
+    const tween = gsap.fromTo(added, { opacity: 0, y: 10 }, {
+      opacity: 1, y: 0, duration: .28, stagger: .08,
+      ease: 'power2.out', clearProps: 'opacity,transform',
+    });
+    return () => {
+      tween.kill();
+      gsap.set(added, { clearProps: 'opacity,transform' });
+    };
   }, [open, messages]);
 
   function close() {
@@ -38,8 +63,10 @@ export default function Chatbot({ cart, onOpenCart, catalogState }) {
 
   return (
     <div className={styles.widget}>
-      {open && (
         <section
+          ref={panelRef}
+          inert={!open}
+          aria-hidden={!open}
           id="burger-chat"
           className={styles.panel}
           role="dialog"
@@ -52,7 +79,7 @@ export default function Chatbot({ cart, onOpenCart, catalogState }) {
           }}
         >
           <header className={styles.header}>
-            <span className={styles.avatar} aria-hidden="true">B</span>
+            <span className={styles.avatar}><ChatbotIcon /></span>
             <div>
               <h2 id="burger-chat-title">Burger Zone</h2>
               <p>Asistente virtual</p>
@@ -81,10 +108,9 @@ export default function Chatbot({ cart, onOpenCart, catalogState }) {
             <button type="submit" disabled={!draft.trim()} aria-label="Enviar mensaje"><span uk-icon="arrow-right" aria-hidden="true" /></button>
           </form>
         </section>
-      )}
       <button ref={launcherRef} type="button" className={styles.launcher} aria-expanded={open} aria-controls={open ? 'burger-chat' : undefined} onClick={() => open ? close() : setOpen(true)}>
-        <span uk-icon={open ? 'close' : 'commenting'} aria-hidden="true" />
-        {open ? 'Cerrar chat' : '¿Necesitas ayuda?'}
+        {open ? <span uk-icon="icon: close; ratio: 1.4" aria-hidden="true" /> : <ChatbotIcon />}
+        <span className="uk-hidden-visually">{open ? 'Cerrar chat' : 'Abrir asistente de Burger Zone'}</span>
       </button>
     </div>
   );

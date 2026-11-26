@@ -1,6 +1,5 @@
 import styles from './Contact.module.css';
 import { business } from '../data/business.js';
-import { categories } from '../data/menu.js';
 
 export default function Contact() {
   return (
@@ -59,7 +58,7 @@ export default function Contact() {
         </form>
         </div>
         <figure className={styles.visual}>
-          <img src={categories[0].image} alt="Hamburguesa con queso, carne y vegetales" width="700" height="900" />
+          <img src="/images/contact-burger-bar.png" alt="Barra de restaurante con iluminación cálida y una hamburguesa servida" width="1086" height="1448" />
           <figcaption><span>BURGER ZONE</span><strong>Siempre hay algo que compartir.</strong></figcaption>
         </figure>
       </div>

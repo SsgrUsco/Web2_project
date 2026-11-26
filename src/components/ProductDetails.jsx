@@ -3,6 +3,7 @@ import { gsap, useGSAP } from '../lib/motion.js';
 import { formatPrice } from '../data/menu.js';
 import { configureProduct, getProductOptions } from '../data/productOptions.js';
 import styles from './ProductDetails.module.css';
+import ProductIngredients from './ProductIngredients.jsx';
 
 export default function ProductDetails({ product, onAdd, onClose }) {
   const dialog = useRef(null);
@@ -42,7 +43,7 @@ export default function ProductDetails({ product, onAdd, onClose }) {
         <div className={styles.body}>
           <span className="eyebrow">{product.category}</span>
           <h2 id="product-title">{product.name}</h2>
-          <p>{product.description}</p>
+          <ProductIngredients description={product.description} />
           {options.sizes.length > 1 && <fieldset><legend>Tamaño</legend>{options.sizes.map((option, index) => <label key={option.name}><input className="uk-radio" type="radio" name="size" checked={size === index} onChange={() => setSize(index)} /><span>{option.name}</span><strong>{option.price ? `+ ${formatPrice(option.price)}` : 'Incluido'}</strong></label>)}</fieldset>}
           {options.extras.length > 0 && <fieldset><legend>Agrega extras</legend>{options.extras.map(extra => <label key={extra.name}><input className="uk-checkbox" type="checkbox" checked={extras.includes(extra.name)} onChange={() => toggle(setExtras, extra.name)} /><span>{extra.name}</span><strong>+ {formatPrice(extra.price)}</strong></label>)}</fieldset>}
           {options.removable.length > 0 && <fieldset><legend>¿Lo prefieres sin algo?</legend>{options.removable.map(name => <label key={name}><input className="uk-checkbox" type="checkbox" checked={removed.includes(name)} onChange={() => toggle(setRemoved, name)} /><span>Sin {name.toLowerCase()}</span></label>)}</fieldset>}
