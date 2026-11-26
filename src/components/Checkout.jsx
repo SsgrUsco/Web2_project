@@ -5,10 +5,13 @@ import PaymentConfirmation from './PaymentConfirmation.jsx';
 import { business } from '../data/business.js';
 import styles from './Checkout.module.css';
 import { validateCheckoutField } from '../data/checkoutValidation.js';
+import useReveal from '../hooks/useReveal.js';
 
 export default function Checkout({ items, payment, onConfirm, onQuantityChange, onRemove }) {
   const [delivery, setDelivery] = useState('pickup');
   const [method, setMethod] = useState('cash');
+  const heading = useReveal();
+  const form = useReveal({ enabled: items.length > 0 && !payment });
   const submit = event => {
     event.preventDefault();
     // El pago en línea requiere una pasarela; nunca confirmar un cobro localmente.
@@ -22,7 +25,7 @@ export default function Checkout({ items, payment, onConfirm, onQuantityChange, 
   return (
     <section className={styles.checkout} aria-labelledby="checkout-title">
       <div className="container">
-        <header className={styles.heading}>
+        <header ref={heading} data-reveal className={styles.heading}>
           <span className="eyebrow">A UN PASO DE TU ANTOJO</span>
           <h1 id="checkout-title">Finaliza tu pedido</h1>
           <p>Revisa tu selección y elige cómo quieres recibirla.</p>
@@ -30,11 +33,11 @@ export default function Checkout({ items, payment, onConfirm, onQuantityChange, 
         {payment ? <div className={styles.result}><PaymentConfirmation payment={payment} onClose={() => { window.location.hash = '/compras'; }} /></div>
           : !items.length ? <div className={styles.result}><span uk-icon="icon: cart; ratio: 2" /><h2>Tu carrito está vacío</h2><p>Encuentra tu próximo favorito en nuestro menú.</p><a className="btn-primary" href="#/compras">Explorar el menú</a></div>
           : <div className={styles.layout}>
-            <form id="checkout-form" className={`uk-form-stacked ${styles.form}`} onSubmit={submit}
+            <form ref={form} id="checkout-form" className={`uk-form-stacked ${styles.form}`} onSubmit={submit}
               onInput={event => validateCheckoutField(event.target)}
               onBlurCapture={event => validateCheckoutField(event.target)}
               onInvalidCapture={event => validateCheckoutField(event.target)}>
-              <fieldset className={styles.section}>
+              <fieldset data-reveal className={styles.section}>
                 <legend><span>01</span> Tus datos</legend>
                 <div className={styles.fields}>
                   <label>Nombre<input className="uk-input" name="firstName" autoComplete="given-name" placeholder="Tu nombre" maxLength={80} required /></label>
@@ -43,7 +46,7 @@ export default function Checkout({ items, payment, onConfirm, onQuantityChange, 
                   <label>Correo electrónico<input className="uk-input" name="email" type="email" autoComplete="email" placeholder="nombre@correo.com" maxLength={254} required /></label>
                 </div>
               </fieldset>
-              <fieldset className={styles.section}>
+              <fieldset data-reveal data-reveal-order="1" className={styles.section}>
                 <legend><span>02</span> Entrega</legend>
                 <div className={styles.choices}>
                   <label><input className="uk-radio" type="radio" name="delivery" value="pickup" checked={delivery === 'pickup'} onChange={() => setDelivery('pickup')} /> Recoger en el local</label>
@@ -56,7 +59,7 @@ export default function Checkout({ items, payment, onConfirm, onQuantityChange, 
                 </div>}
                 <label className={styles.notes}>Indicaciones adicionales <span>(opcional)</span><textarea className="uk-textarea" name="notes" placeholder="Una referencia para la entrega o una indicación para tu pedido" rows={3} maxLength={500} /></label>
               </fieldset>
-              <fieldset className={styles.section}>
+              <fieldset data-reveal data-reveal-order="2" className={styles.section}>
                 <legend><span>03</span> Forma de pago</legend>
                 <div className={`${styles.choices} ${styles.paymentChoices}`}>
                   <label><input className="uk-radio" type="radio" name="method" checked={method === 'cash'} onChange={() => setMethod('cash')} /> Efectivo al recibir <span className={styles.cashIcon} uk-icon="credit-card" aria-hidden="true" /></label>

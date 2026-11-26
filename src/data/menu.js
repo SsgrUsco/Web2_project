@@ -2,25 +2,25 @@ export const categories = [
   {
     name: 'Hamburguesas',
     description: 'Jugosas y con todo el sabor',
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=85',
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=75',
     icon: '☰',
   },
   {
     name: 'Perros calientes',
     description: 'El clásico que nunca falla',
-    image: 'https://images.unsplash.com/photo-1768250708131-23da8d1cb5ad?auto=format&fit=crop&w=700&q=85',
+    image: 'https://images.unsplash.com/photo-1768250708131-23da8d1cb5ad?auto=format&fit=crop&w=700&q=75',
     icon: '↝',
   },
   {
     name: 'Salchipapas',
     description: 'Papas, salchicha y mucho más',
-    image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=85',
+    image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=75',
     icon: '♨',
   },
   {
     name: 'Fritos',
     description: 'Crujientes y deliciosos',
-    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=85',
+    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=75',
     icon: '✦',
   },
 ];
@@ -46,17 +46,17 @@ export const drinks = [
   {
     name: 'Jugos naturales',
     description: 'Refrescantes y llenos de sabor',
-    image: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=700&q=85',
+    image: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=700&q=75',
   },
   {
     name: 'Gaseosas',
     description: 'Postobon, Coca-Cola, Pepsi y más',
-    image: 'https://images.unsplash.com/photo-1544241907-f3f1f5ded15a?auto=format&fit=crop&w=700&q=85',
+    image: 'https://images.unsplash.com/photo-1544241907-f3f1f5ded15a?auto=format&fit=crop&w=700&q=75',
   },
   {
     name: 'Limonadas',
     description: 'Natural, de coco, cerezada y más',
-    image: 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=700&q=85',
+    image: 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=700&q=75',
   },
 ];
 

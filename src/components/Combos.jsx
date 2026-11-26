@@ -22,7 +22,17 @@ export default function Combos({ onAdd, catalogState }) {
     if (!element) return;
     const media = gsap.matchMedia();
     media.add({ reduce: '(prefers-reduced-motion: reduce)', standard: '(prefers-reduced-motion: no-preference)' }, mediaContext => {
-      const context = gsap.context(() => {}, element);
+      const context = gsap.context(() => {
+        // Una sola entrada del conjunto; UIkit conserva el movimiento horizontal.
+        gsap.from(element, {
+          opacity: .15,
+          y: mediaContext.conditions.reduce ? 0 : 30,
+          duration: .65,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: element, start: 'top 92%', end: 'bottom top', toggleActions: 'restart none none reset' },
+          clearProps: 'opacity,transform',
+        });
+      }, element);
       context.add('animateControl', event => {
         // Las tarjetas se desplazan juntas con UIkit; GSAP responde en el control.
         const button = event.target.closest('button[uk-slider-item]');

@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { getChatReply } from '../data/chatbot.js';
 import styles from './Chatbot.module.css';
 import ChatbotIcon from './ChatbotIcon.jsx';
+import ChatSuggestions from './ChatSuggestions.jsx';
 import { gsap } from '../lib/motion.js';
 
-const suggestions = ['Ver menú', 'Horarios', 'Mi carrito'];
+const suggestions = ['Recomiéndame un combo', 'Hasta 20 mil', 'Mi carrito', 'Horarios'];
 
 export default function Chatbot({ cart, onOpenCart, catalogState }) {
   const [open, setOpen] = useState(false);
@@ -55,7 +56,7 @@ export default function Chatbot({ cart, onOpenCart, catalogState }) {
   function send(value) {
     const text = value.trim().slice(0, 500);
     if (!text) return;
-    const reply = getChatReply(text, cart, catalogState.products, catalogState.status);
+    const reply = getChatReply(text, cart, catalogState.products, catalogState.status, messages);
     setMessages(current => [...current, { role: 'user', text }, { role: 'assistant', ...reply }]);
     setDraft('');
     inputRef.current?.focus();
@@ -99,9 +100,7 @@ export default function Chatbot({ cart, onOpenCart, catalogState }) {
               </div>
             ))}
           </div>
-          <div className={styles.suggestions} aria-label="Preguntas rápidas">
-            {suggestions.map(question => <button type="button" key={question} onClick={() => send(question)}>{question}</button>)}
-          </div>
+          <ChatSuggestions suggestions={suggestions} onSelect={send} chatOpen={open} />
           <form className={styles.form} onSubmit={event => { event.preventDefault(); send(draft); }}>
             <label htmlFor="burger-chat-input" className="uk-hidden-visually">Tu mensaje</label>
             <input ref={inputRef} id="burger-chat-input" className="uk-input" value={draft} onChange={event => setDraft(event.target.value)} placeholder="Escribe tu mensaje…" maxLength={500} autoComplete="off" />
@@ -109,7 +108,11 @@ export default function Chatbot({ cart, onOpenCart, catalogState }) {
           </form>
         </section>
       <button ref={launcherRef} type="button" className={styles.launcher} aria-expanded={open} aria-controls={open ? 'burger-chat' : undefined} onClick={() => open ? close() : setOpen(true)}>
-        {open ? <span uk-icon="icon: close; ratio: 1.4" aria-hidden="true" /> : <ChatbotIcon />}
+        {open ? (
+          <svg key="close" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+            <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        ) : <img key="assistant" src="/images/chatbot-assistant.svg" width="40" height="40" alt="" aria-hidden="true" draggable={false} />}
         <span className="uk-hidden-visually">{open ? 'Cerrar chat' : 'Abrir asistente de Burger Zone'}</span>
       </button>
     </div>

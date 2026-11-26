@@ -1,18 +1,20 @@
 import styles from './Contact.module.css';
 import { business } from '../data/business.js';
+import useReveal from '../hooks/useReveal.js';
 
 export default function Contact() {
+  const section = useReveal();
   return (
-    <section className={styles.contact} aria-labelledby="contact-title">
+    <section ref={section} className={styles.contact} aria-labelledby="contact-title">
       <div className={`container ${styles.layout}`}>
         <div className={styles.content}>
-        <header className={styles.heading}>
+        <header data-reveal className={styles.heading}>
           <span className="eyebrow">ESTAMOS PARA ESCUCHARTE</span>
           <h1 id="contact-title">HABLEMOS <em>DE TU ANTOJO</em></h1>
           <p>¿Tienes una pregunta o una sugerencia? Nos gustaría conocerla.</p>
         </header>
 
-        <div className={styles.info}>
+        <div data-reveal data-reveal-order="1" className={styles.info}>
           <div className={styles.infoItem}>
             <span uk-icon="icon: mail; ratio: 1.3" aria-hidden="true" />
             <div><h2>Escríbenos</h2><p>{business.email}</p></div>
@@ -32,7 +34,7 @@ export default function Contact() {
           </div>
         </div>
 
-        <form className={`uk-form-stacked ${styles.form}`} aria-labelledby="contact-form-title" onSubmit={event => event.preventDefault()}>
+        <form data-reveal data-reveal-order="2" className={`uk-form-stacked ${styles.form}`} aria-labelledby="contact-form-title" onSubmit={event => event.preventDefault()}>
           <div className={styles.formHeading}><h2 id="contact-form-title">Déjanos un mensaje</h2><p>Cuéntanos cómo podemos ayudarte.</p></div>
           <div className={styles.fields}>
             <div className={styles.fullWidth}>
@@ -58,8 +60,8 @@ export default function Contact() {
         </form>
         </div>
         <figure className={styles.visual}>
-          <img src="/images/contact-burger-bar.png" alt="Barra de restaurante con iluminación cálida y una hamburguesa servida" width="1086" height="1448" />
-          <figcaption><span>BURGER ZONE</span><strong>Siempre hay algo que compartir.</strong></figcaption>
+          <img src="/images/contact-burger-bar.webp" alt="Barra de restaurante con iluminación cálida y una hamburguesa servida" width="1086" height="1448" />
+          <figcaption data-reveal><span>BURGER ZONE</span><strong>Siempre hay algo que compartir.</strong></figcaption>
         </figure>
       </div>
     </section>

@@ -28,11 +28,11 @@
   font-weight: 800;
   box-shadow: 0 6px 24px #0005;
   cursor: pointer;
-  transition: transform .2s ease, background-color .2s ease;
+  transition: background-color .2s ease, box-shadow .2s ease;
 }
 
-.launcher:hover { background: #ffab50; transform: translateY(-3px) scale(1.04); }
-.launcher:active { transform: scale(.94); }
+.launcher:hover { background: #ffab50; box-shadow: 0 6px 24px #0005, 0 0 0 4px #ff891e26; }
+.launcher:active { background: var(--orange); }
 .launcher:focus-visible { outline: 3px solid var(--cream); outline-offset: 4px; }
 .avatar svg { width: 30px; height: 30px; }
 
@@ -90,9 +90,14 @@
 .user { margin-left: auto; background: var(--orange); color: var(--black); border-bottom-right-radius: 3px; }
 .action { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 0; border: 0; background: transparent; color: var(--orange); font-size: 13px; font-weight: 700; cursor: pointer; }
 .action:hover { color: #ffab50; }
-.suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 14px; border-top: 1px solid #333; }
-.suggestions button { padding: 7px 10px; border: 1px solid #66503a; border-radius: 20px; background: transparent; color: var(--cream); font-size: 12px; cursor: pointer; }
-.suggestions button:hover { border-color: var(--orange); color: var(--orange); }
+.suggestions { position: relative; padding: 10px 14px; border-top: 1px solid #333; }
+.suggestionsToggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 9px 12px; border: 1px solid #66503a; border-radius: 8px; background: #1f1f1f; color: var(--cream); font-size: 12px; cursor: pointer; }
+.suggestionsPopup { position: absolute; z-index: 3; bottom: calc(100% + 4px); left: 14px; right: 14px; display: grid; gap: 4px; padding: 8px; border: 1px solid #66503a; border-radius: 12px; background: #202020; box-shadow: 0 -8px 28px #0006; max-height: min(220px, 35dvh); overflow-y: auto; animation: suggestionsEnter .18s ease-out; }
+.suggestionsPopup button { min-height: 38px; padding: 9px 12px; text-align: left; border: 0; border-radius: 6px; background: transparent; color: var(--cream); font-size: 12px; cursor: pointer; }
+.suggestionsPopup button:hover { background: #ff891e18; color: var(--orange); }
+.suggestions button:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+@keyframes suggestionsEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .suggestionsPopup { animation: none; } }
 .form { display: flex; gap: 8px; padding: 0 14px 14px; }
 .form input { flex: 1; min-width: 0; height: 44px; border: 1px solid #4b4b4b; border-radius: 8px; background: var(--black); color: var(--cream); font-size: 16px; }
 .form input:focus { border-color: var(--orange); background: var(--black); color: var(--cream); }
@@ -106,3 +111,5 @@
   .launcher { width: 58px; height: 58px; padding: 8px; }
   .panel { height: min(460px, calc(100dvh - 140px)); }
 }
+
+.launcher > img, .launcher > svg { display: block; flex-shrink: 0; pointer-events: none; user-select: none; }

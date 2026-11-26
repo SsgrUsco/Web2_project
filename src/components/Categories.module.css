@@ -1,7 +1,8 @@
 .categoriesSection {
   padding: var(--section-space) 0;
-  background: var(--cream);
-  color: #171717;
+  background: radial-gradient(ellipse at top right, #ff891e14 0%, transparent 60%), #1b1b1b;
+  color: var(--cream);
+  border-block: 1px solid var(--line);
 }
 
 .categoryGrid {
@@ -14,11 +15,13 @@
   overflow: hidden;
   border-radius: var(--radius);
   background: #121212;
+  border: 1px solid var(--line);
   color: white;
-  transition: transform 0.2s;
+  transition: transform 0.2s, border-color 0.2s;
 }
 
 .categoryCard:hover {
+  border-color: var(--orange);
   color: white;
   transform: translateY(-4px);
 }

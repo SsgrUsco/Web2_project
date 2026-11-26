@@ -70,8 +70,8 @@
   display: grid;
   grid-template-columns: 54px minmax(0, 1fr);
   gap: 12px;
-  align-items: center;
-  padding: 10px 16px;
+  align-items: start;
+  padding: 14px 16px;
 }
 
 .cartItem + .cartItem {
@@ -96,9 +96,8 @@
   font-size: 14px;
   font-weight: 700;
   color: var(--cream);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .cartItemPrice {
@@ -112,15 +111,18 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   margin-top: 2px;
 }
 
 .qtyControls button {
+  box-sizing: border-box;
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 28px;
+  flex-shrink: 0;
+  padding: 0;
   border: 1px solid #333;
   border-radius: 7px;
   background: #1f1f1f;
@@ -144,7 +146,7 @@
 
 .qtyControls .cartRemove {
   width: auto;
-  margin-left: 4px;
+  margin-left: 0;
   padding: 0 9px;
   font-size: 11px;
   text-transform: uppercase;

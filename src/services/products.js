@@ -23,7 +23,7 @@ export function normalizeProducts(data) {
       name: item.name.trim(),
       description: typeof item.description === 'string' ? item.description.trim() : '',
       price,
-      image: item.image,
+      image: item.image.replace(/^(\/images\/products\/producto-\d{2})\.png$/, '$1.webp'),
       category: item.category.trim(),
       subcategory: typeof item.subcategory === 'string' ? item.subcategory.trim() : '',
     };

@@ -1,11 +1,13 @@
 import QuantityInput from './QuantityInput.jsx';
 import { formatPrice } from '../data/menu.js';
 import styles from './Checkout.module.css';
+import useReveal from '../hooks/useReveal.js';
 
 export default function CheckoutSummary({ items, delivery, method, onQuantityChange, onRemove }) {
+  const summary = useReveal();
   const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
   return (
-    <aside className={styles.summary} aria-labelledby="order-title">
+    <aside ref={summary} data-reveal data-reveal-order="1" className={styles.summary} aria-labelledby="order-title">
       <div className={styles.summaryHeading}><h2 id="order-title">Tu pedido</h2><a href="#/compras">Seguir eligiendo</a></div>
       <ul className={styles.items}>
         {items.map(item => <li key={item.id} className={styles.item}>

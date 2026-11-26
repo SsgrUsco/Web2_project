@@ -11,6 +11,7 @@ export default function Categories() {
         <div data-reveal><SectionHeading
           eyebrow="NUESTRAS CATEGORÍAS"
           title="¿Qué se te antoja hoy?"
+          light
         /></div>
 
         <div className={styles.categoryGrid}>
